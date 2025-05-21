@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bingo App</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+table {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+th, td {
+  border: 2px solid #fff;
+  padding: 20px;
+  font-size: 1em;
+  background-color: #fffbe6;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+th {
+  background-color: #ffcc00;
+  font-size: 1.5em;
+}
+
+td.checked {
+  background-color: #90ee90;
+  transform: scale(1.05);
+  animation: bounce 0.3s ease;
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1.05); }
+}
+
+#controls {
+  margin-top: 30px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff9900;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #e68a00;
+}
+
+  </style>
+</head>
+<body>
+  <h1>Bingo</h1>
+  <table id="bingo">
+    <thead>
+      <tr><th>B</th><th>I</th><th>N</th><th>G</th><th>O</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>little man</td><td>Connor shows up</td><td>David Tennant</td><td>Pinterest</td><td>Charlotte has no food</td>
+      </tr>
+      <tr>
+        <td>Penelope crochets</td><td>Ingrid shows up</td><td>Bailley has vitamin water bottle</td><td>School french fries</td><td>chainlynx</td>
+      </tr>
+      <tr>
+        <td>Maddie screens</td><td>Penelope wears a "aaaaaaaaaaah!" shirt</td><td>FREE</td><td>theater shenanigans</td><td>can you do my ctd work</td>
+      </tr>
+      <tr>
+        <td>Bailey wears green</td><td>singing</td><td>desmos or coding</td><td>Bell peppers</td><td>Men</td>
+      </tr>
+      <tr>
+        <td>Mihir appears</td><td>someone sits incorrectly</td><td>Someone tells a pun</td><td>lit mag</td><td>This is due...</td>
+      </tr>
+    </tbody>
+  </table>  <div id="controls">
+    <button onclick="generateCode()">Generate Code</button><br>
+    <input type="text" id="codeOutput" readonly placeholder="Your progress code will appear here" />
+    <br><br>
+    <input type="text" id="codeInput" placeholder="Paste your code here" />
+    <button onclick="restoreCode()">Restore</button>
+  </div>  <script>
+    const cells = document.querySelectorAll('#bingo td');
+
+    cells.forEach((cell, index) => {
+      cell.addEventListener('click', () => {
+        if (cell.textContent !== 'FREE') {
+          cell.classList.toggle('checked');
+        }
+      });
+    });
+
+    function generateCode() {
+      let code = '';
+      cells.forEach(cell => {
+        code += cell.classList.contains('checked') ? '1' : '0';
+      });
+      document.getElementById('codeOutput').value = code;
+    }
+
+    function restoreCode() {
+      const code = document.getElementById('codeInput').value.trim();
+      cells.forEach((cell, i) => {
+        if (cell.textContent !== 'FREE') {
+          cell.classList.toggle('checked', code[i] === '1');
+        }
+      });
+    }
+  </script></body>
+</html>
